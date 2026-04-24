@@ -332,3 +332,44 @@ app.put('/items/:id', (req, res) => {
 });
 
 app.listen(3000);
+
+
+
+
+       //get
+
+       const express = require('express');
+const app = express();
+
+app.get('/items', (req, res) => {
+  res.json([
+    { id: 1, name: "Item 1" },
+    { id: 2, name: "Item 2" }
+  ]);
+});
+
+app.listen(3000);
+
+
+       //post 
+
+
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+let items = [];
+
+app.post('/items', (req, res) => {
+  const newItem = {
+    id: items.length + 1,
+    name: req.body.name
+  };
+
+  items.push(newItem);
+  res.json(newItem);
+});
+
+app.listen(3000);
+     
