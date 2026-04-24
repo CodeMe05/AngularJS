@@ -1,0 +1,213 @@
+
+Practical 1: User-Friendly Interface
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-controller="MainController">
+  <h1>Welcome to My AngularJS App</h1>
+  <p>This is a simple and user-friendly interface.</p>
+
+  <input type="text" ng-model="userInput" placeholder="Type something..." />
+  <button ng-click="updateMessage()">Submit</button>
+
+  <p>{{ message }}</p>
+</div>
+
+<script>
+var app = angular.module("myApp", []);
+
+app.controller("MainController", function($scope){
+  $scope.message = "Hello, world!";
+  
+  $scope.updateMessage = function(){
+    $scope.message = "You typed: " + $scope.userInput;
+  };
+});
+</script>
+
+</body>
+</html>
+
+
+Practical 2: Login Form with Validation
+<!DOCTYPE html>
+<html ng-app="loginApp">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-controller="LoginController">
+  <form name="loginForm">
+
+    <label>Username:</label>
+    <input type="text" ng-model="username" name="username" required />
+    <span ng-show="loginForm.username.$error.required">
+      Username is required
+    </span>
+    <br><br>
+
+    <label>Password:</label>
+    <input type="password" ng-model="password" name="password" required ng-minlength="6" />
+    <span ng-show="loginForm.password.$error.required">
+      Password is required
+    </span>
+    <span ng-show="loginForm.password.$error.minlength">
+      Minimum 6 characters required
+    </span>
+    <br><br>
+
+    <button ng-disabled="loginForm.$invalid" ng-click="login()">Login</button>
+
+  </form>
+</div>
+
+<script>
+var app = angular.module("loginApp", []);
+
+app.controller("LoginController", function($scope){
+  $scope.username = "";
+  $scope.password = "";
+
+  $scope.login = function(){
+    if($scope.loginForm.$valid){
+      alert("Login Successful!");
+    }
+  };
+});
+</script>
+
+</body>
+</html>
+
+Practical 3: Service and Data Binding
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-controller="MainController">
+
+<h2>Data Binding with AngularJS Services</h2>
+
+<label>Name:</label>
+<input type="text" ng-model="data.name" placeholder="Enter your name" />
+<br><br>
+
+<label>Email:</label>
+<input type="email" ng-model="data.email" placeholder="Enter your email" />
+
+<h3>Entered Data:</h3>
+<p>Name: {{ data.name }}</p>
+<p>Email: {{ data.email }}</p>
+
+<script>
+var app = angular.module("myApp", []);
+
+app.service("DataService", function(){
+  this.data = {
+    name: "",
+    email: ""
+  };
+});
+
+app.controller("MainController", function($scope, DataService){
+  $scope.data = DataService.data;
+});
+</script>
+
+</body>
+</html>
+
+
+
+Practical 4: Task List with Checkbox
+<!DOCTYPE html>
+<html ng-app="taskApp">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    .completed {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body ng-controller="TaskController">
+
+<h2>Task List</h2>
+
+<ul>
+  <li ng-repeat="task in tasks">
+    <input type="checkbox" ng-model="task.completed">
+    <span ng-class="{completed: task.completed}">
+      {{ task.name }}
+    </span>
+  </li>
+</ul>
+
+<script>
+var app = angular.module("taskApp", []);
+
+app.controller("TaskController", function($scope){
+  $scope.tasks = [
+    { name: "Task 1", completed: false },
+    { name: "Task 2", completed: true },
+    { name: "Task 3", completed: false },
+    { name: "Task 4", completed: true }
+  ];
+});
+</script>
+
+</body>
+</html>
+
+
+Practical 5: ng-if Directive
+<!DOCTYPE html>
+<html ng-app="taskApp">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+  </style>
+</head>
+<body ng-controller="TaskController">
+
+<h2>Task List (ng-if Example)</h2>
+
+<ul>
+  <li ng-repeat="task in tasks">
+    
+    <span ng-if="!task.completed">
+      {{ task.name }}
+    </span>
+
+    <span ng-if="task.completed" class="completed">
+      {{ task.name }} (Completed)
+    </span>
+
+  </li>
+</ul>
+
+<script>
+var app = angular.module("taskApp", []);
+
+app.controller("TaskController", function($scope){
+  $scope.tasks = [
+    { name: "Buy groceries", completed: false },
+    { name: "Read a book", completed: true },
+    { name: "Write code", completed: false },
+    { name: "Exercise", completed: true }
+  ];
+});
+</script>
+
+</body>
+</html>
